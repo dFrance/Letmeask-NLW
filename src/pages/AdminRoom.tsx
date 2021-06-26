@@ -108,11 +108,11 @@ export function AdminRoom() {
         console.log(questionId);
     }
 
-    if (authorId !== user?.id){ 
-        console.log("Foi")
-    } else {
-        history.push('/')
-    }
+    // if (authorId !== user?.id){ 
+    //     console.log("Foi")
+    // } else {
+    //     history.push('/')
+    // }
 
     return (
         <>
