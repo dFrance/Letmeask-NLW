@@ -1,0 +1,153 @@
+.questions {
+    margin-top: 32px;
+    width: 100%;
+    border: 0;
+    padding: 16px;
+    border-radius:8px;
+    resize: vertical;
+    background: #fefefe;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+
+    & + .questions {
+        margin-top: 16px;
+    }
+
+    p {
+        color: #29292e;
+    }
+
+    .message {
+        color: #fff;
+    }
+
+    &.highlighted {
+        background: #f4f0ff;
+        border: 2px solid #835afd;
+    }
+
+    &.answered {
+        background: rgba(46, 204, 113, 0.8);
+        border:  2px solid rgba(22, 160, 133, 1);
+        .footer-questions {
+            color: #fff;
+
+            button {
+                svg path, svg circle {
+                    stroke: #fff !important;
+                }
+
+                &:hover {
+                    svg path, svg circle {
+                        filter: brightness(none) !important;
+                        fill: #FFF !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-questions {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    
+    
+        .make-login {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            color: #737380;
+            text-decoration: underline;
+        }
+    
+        .message-auth{
+            align-items: center;
+            display: flex;
+            font: 500 14px 'Roboto';
+    
+        }
+        img {
+            max-width: 32px;
+            margin-right: 10px;
+            border-radius: 25px;
+        }
+        div {
+            display: flex;
+            gap: 16px;
+
+            button {
+                display: flex;
+                align-items: flex-end;
+                border:0;
+                background: transparent;
+                cursor: pointer;
+                color: #FFF;
+                transition: 0.5s;
+                
+                
+                &.liked, &:hover {
+                    color: #FFF;
+                    
+                    svg path {
+                        stroke: #ff9f43;
+                    }
+                }
+            }
+            .check-question {
+                transition: 0.2s;
+
+                &:hover {                    
+                    svg path, svg circle {
+                        stroke: #2ecc71;
+                    }
+                }  
+            }
+            .delete-question {
+                transition: 0.2s;
+
+                &:hover {                  
+                    svg path {
+                        stroke: #f10c0c;
+                    }
+                }
+            }
+        }
+    }
+    .reply-question {
+        margin-top:20px;
+    }
+    
+}
+.reply-content {
+    color: #fff;
+    margin-top: 20px;
+    span {
+        font: 400 14px 'Roboto', sans-serif; ;
+    }
+    p {
+        color: #fff;
+        font: 500 16px 'Roboto', sans-serif;
+    }
+}
+.reply {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+    border-radius: 15px;
+    height: 80px;
+    padding: 15px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4) ;
+
+    button {
+        min-width: 150px;
+    }
+    input {
+        height: 40px;
+        border-radius: 15px;
+        width: 100%;
+        text-indent: 20px;
+    } 
+}

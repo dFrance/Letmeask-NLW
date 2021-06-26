@@ -1,0 +1,135 @@
+header {
+    flex: 1;
+    display: flex;
+    height: 120px;
+    background-color: #f8f8f8;
+    border-bottom: 2px solid #eaeaea ;
+
+    .container-header {
+        display: flex;
+        flex: 1;
+        max-width: 1200px;
+        margin: 20px auto 0;
+        justify-content: space-between;
+
+
+        .logo {
+            max-width: 100px;
+            margin: 16px 64px; 
+            transition: 0.2s;
+
+            &:hover {
+                cursor: pointer;
+                filter: brightness(0.9);
+            }
+        }
+
+        .buttons-header {
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            min-width: 550px;
+            padding: 20px 50px;
+
+            button {
+                height:40px;
+            }
+        }
+    }
+}
+
+main {
+    background-color: #f8f8f8;
+    
+    .container-questions {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        max-width: 800px;
+        margin: 100px auto;
+
+        .header-questions {
+            display: flex;
+            flex: 1;
+            height: 50px;
+            
+            .questions-lenght {
+                font: 400 14px 'Roboto';
+                margin-left: 25px;
+                background-color: #ff9f43;
+                text-align: center;
+                padding: 8px 16px;
+                color: #fff;
+                border-radius: 25px;
+                height: 35px;
+            }
+        }
+
+    }
+    
+    form {
+        .question {
+            width: 100%;
+            border: 0;
+            padding: 16px;
+            border-radius:8px;
+            resize: vertical;
+            min-height: 135px;
+            background: #fefefe;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+
+        .footer-question {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        
+        
+            .make-login {
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+                color: #ff9f43;
+                text-decoration: underline;
+            }
+        
+            .message-auth{
+                align-items: center;
+                display: flex;
+                font: 500 14px 'Roboto';
+        
+            }
+            img {
+                max-width: 32px;
+                margin-right: 10px;
+                border-radius: 25px;
+            }
+            button{
+                border:0;
+            }
+            .like-button, .delete-question {
+                background: transparent;
+                cursor: pointer;
+                color: #ff9f43;
+                gap: 8px;
+                transition: 0.2s;
+        
+                &:hover {
+                    filter: brightness(0.8);
+                }
+        
+                &.liked {
+                    color: #ff9f43;
+        
+                    svg path {
+                        stroke: #ff9f43;
+                    }
+                }
+            }
+        }
+    }
+}
+

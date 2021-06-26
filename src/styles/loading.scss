@@ -1,0 +1,18 @@
+@keyframes loading {
+    0%   {
+        opacity: 0.5;
+        font-size: 24px;}
+    100% {
+        opacity: 1;
+        font-size: 12px;}
+  }
+
+.loading{
+    animation: loading 2s;
+    height: 100vh;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 500 26px 'Poppins', sans-serif;
+}
