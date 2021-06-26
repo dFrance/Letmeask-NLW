@@ -1,0 +1,14 @@
+[debug] [2021-06-26T03:22:37.573Z] ----------------------------------------------------------------------
+[debug] [2021-06-26T03:22:37.574Z] Command:       C:\Program Files (x86)\nodejs\node.exe C:\Users\h\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-06-26T03:22:37.575Z] CLI Version:   9.14.0
+[debug] [2021-06-26T03:22:37.575Z] Platform:      win32
+[debug] [2021-06-26T03:22:37.575Z] Node Version:  v14.16.1
+[debug] [2021-06-26T03:22:37.576Z] Time:          Sat Jun 26 2021 00:22:37 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2021-06-26T03:22:37.576Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-06-26T03:22:37.581Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-06-26T03:22:37.582Z] > authorizing via signed-in user (emaildogabrieldefranca@gmail.com)
+[debug] [2021-06-26T03:22:37.582Z] [iam] checking project letmeask-b903b for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2021-06-26T03:22:37.583Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-06-26T03:22:37.583Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
