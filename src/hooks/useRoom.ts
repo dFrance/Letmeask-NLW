@@ -4,7 +4,9 @@ import { useAuth } from "./useAuth";
 
 type QuestionType = {
     id: string;
+    moderator?: string;
     replyContent: string;
+    endedAt: boolean;
     openReply: boolean;
     author: {
         name: string;
@@ -22,6 +24,8 @@ type FirebaseQuestions = Record<string, {
         name: string;
         avatar: string;
     }
+    moderator?: string;
+    endedAt: boolean;
     openReply: boolean;
     replyContent: string;
     content: string;
@@ -36,7 +40,9 @@ export function useRoom(roomId: string) {
     const { user } = useAuth();
     const [questions, setQuestions] = useState<QuestionType[]>([]);
     const [title, setTitle] = useState();
+    const [moderator, setModerator] = useState();
     const [authorId, setAuthorId] = useState();
+    const [endedAt, setEndedAt] = useState();
     const openReply = useState(false);
     
     useEffect(() => {
@@ -49,6 +55,8 @@ export function useRoom(roomId: string) {
             const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
                 return {
                     id: key,
+                    endedAt: value.endedAt,
+                    moderatorId: value.moderator,
                     content: value.content,
                     openReply: value.openReply,
                     replyContent: value.replyContent,
@@ -59,7 +67,9 @@ export function useRoom(roomId: string) {
                     likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0],
                 }
             })
+            setEndedAt(databaseRoom.endedAt)
             setTitle(databaseRoom.title)
+            setModerator(databaseRoom.moderator)
             setAuthorId(databaseRoom.authorId)
             setQuestions(parsedQuestions)
         })
@@ -69,7 +79,7 @@ export function useRoom(roomId: string) {
         }
     }, [roomId, user?.id]);
 
-    return {questions, title, openReply, authorId}
+    return {questions, title, openReply, authorId, moderator, endedAt}
 
     
     

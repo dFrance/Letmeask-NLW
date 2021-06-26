@@ -4,6 +4,7 @@ import { useEffect, useState, FormEvent } from 'react';
 
 import logoImg from '../assets/images/logo.svg'
 import Button from '../components/Button'
+import {Loading} from '../components/Loading'
 import { RoomCode } from '../components/RoomCode';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../Services/fisebase';
@@ -26,13 +27,26 @@ export function Room() {
     const params = useParams<RoomParams>();
     const roomId = params.id;
     const [newQuestion, setNewQuestion] = useState('');
+    const [loading, setLoading] = useState(true);
     //const [reply, setReply] = useState('');
     const [validate, setValidate] = useState(false)
 
-    const { title, questions } = useRoom(roomId);
+    const { title, questions, endedAt } = useRoom(roomId);
+    
+    
+    //Verificação de sala online 
+    useEffect(() => {
+        if (endedAt !== undefined) {
+            if (endedAt === false) {
+                setLoading(false);
+            } else {
+                history.push(`/`)
+            }
+        }
+        console.log(endedAt)
+    }, [endedAt])
 
-
-
+    // Verificação de conteúdo da questão //
 
     useEffect(() => {
         if (newQuestion.trim() === '') {
@@ -88,13 +102,17 @@ export function Room() {
         history.push('/')
     }
 
+    if (loading) {
+        return <Loading />
+    }
     return (
         <>
             <header>
                 <div className="container-header">
                     <img className="logo" src={logoImg} alt="Logo da empresa" onClick={toHome} />
                     <div className="buttons-header">
-                        <RoomCode code={params.id} />
+                        <RoomCode text={"Seu código pessoal"} codeId={user?.id || "Carregando..."} />
+                        <RoomCode text={"Código da sala"} code={params.id} />
                     </div>
                 </div>
             </header>
@@ -133,6 +151,7 @@ export function Room() {
                         return (
                             <Questions
                                 key={question.id}
+                                moderator={question.moderator}
                                 content={question.content}
                                 author={question.author}
                                 replyContent={question.replyContent}

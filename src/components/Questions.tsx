@@ -8,6 +8,7 @@ import cx from 'classnames'
 
 type QuestionProps = {
     content: string;
+    moderator?: string;
     replyContent: string;
     author: {
         name: string;
@@ -19,6 +20,7 @@ type QuestionProps = {
     isHighlighted?: boolean;
     openReply?: boolean;
     admin?: boolean;
+    
 }
 
 // type RoomParams = {
@@ -27,6 +29,7 @@ type QuestionProps = {
 
 export function Questions({
     content,
+    moderator,
     replyContent,
     author,
     isAnswered = false,

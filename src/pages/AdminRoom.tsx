@@ -7,12 +7,14 @@ import { RoomCode } from '../components/RoomCode';
 import { database } from '../Services/fisebase';
 
 import { Questions } from '../components/Questions'
+import { Loading } from '../components/Loading'
 
 import '../styles/room.scss'
+import '../styles/admin.scss'
 import '../styles/global.scss'
 import '../styles/questions.scss'
 import { useRoom } from '../hooks/useRoom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 
@@ -21,30 +23,51 @@ type RoomParams = {
 }
 
 export function AdminRoom() {
-    const {user} = useAuth();
+    const { user } = useAuth();
     const params = useParams<RoomParams>();
     const roomId = params.id;
-    const { title, questions, authorId } = useRoom(roomId);
+    const { title, questions, authorId, moderator } = useRoom(roomId);
     const history = useHistory();
     const [replyQuestion, setReplyQuestion] = useState(false);
     const [answered, setAnswered] = useState(false);
     const [spotlight, setSpotlight] = useState(false);
     // const [validate, setValidate] = useState(false)
     const [replyText, setReplyText] = useState('')
+    const [inviteModeratorCode, setInviteModeratorCode] = useState('')
+    const [loading, setLoading] = useState(true);
+    const [openInvite, setOpenInvite] = useState(false);
 
     // Link para a logo //
     function toHome() {
         history.push('/')
     }
 
-    console.log(authorId)
-    console.log(user?.id)
+    // Verificação de Autorização
+    useEffect(() => {
+        if (authorId !== undefined && user?.id !== undefined) {
+            if (authorId === user.id || moderator === user.id) {
+                setLoading(false);
+            } else {
+                history.push(`/`)
+            }
+        }
+        console.log(user?.id)
+        console.log(moderator)
+    }, [authorId])
 
+    // console.log(authorId)
+    // console.log(user?.id)
+
+    // if (authorId == user?.id) {
+
+    // } else {
+    //     history.push('/')
+    // }
     // Encerrar sala //
 
     async function handleQuitRoom() {
         database.ref(`rooms/${roomId}`).update({
-            endedAt: new Date(),
+            endedAt: true,
         })
 
         history.push("/")
@@ -73,16 +96,15 @@ export function AdminRoom() {
     // Eu do futuro, temos um bug por aqui. Quando abre mais de uma pergunta, todos os inputs tem o mesmo valor, ainda nao consegui entender como resolver.
 
     // Responder a Pergunta
-    console.log(replyText.trim())
     async function handleSendAnswser(questionId: string) {
-        
+
         if (replyText.trim() !== '') {
             setAnswered(true)
             await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
                 replyContent: replyText,
             });
             await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-                isAnswered: answered,
+                isAnswered: true,
             });
             database.ref(`rooms/${roomId}/questions/${questionId}`).update({
                 openReply: replyQuestion,
@@ -99,13 +121,23 @@ export function AdminRoom() {
         }
     }
 
+    // Convidar monitor
+    function handleInviteToModeratorRoom() {
+        setOpenInvite(!openInvite);
+        if (inviteModeratorCode.trim() !== '') {
+            database.ref(`rooms/${roomId}`).update({
+                moderator: moderator,
+            });
+            setInviteModeratorCode('')
+        }
+    }
+
     //Destacar pergunta
     async function handleSpotlightQuestion(questionId: string) {
         setSpotlight(!spotlight);
-            await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
-                isHighlighted: spotlight,
-            });
-        console.log(questionId);
+        await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+            isHighlighted: spotlight,
+        });
     }
 
     // if (authorId !== user?.id){ 
@@ -114,6 +146,9 @@ export function AdminRoom() {
     //     history.push('/')
     // }
 
+    if (loading) {
+        return <Loading />
+    }
     return (
         <>
             <header>
@@ -121,7 +156,13 @@ export function AdminRoom() {
                     <img className="logo" src={logoImg} alt="Logo da empresa" onClick={toHome} />
                     <div className="buttons-header">
                         <RoomCode code={params.id} />
-                        <Button onClick={handleQuitRoom} color="pattern">Encerrar a sala </Button>
+                        {user?.id === moderator ? '' :
+                            <>
+                                {openInvite ? <input className="inviteModerator" value={inviteModeratorCode} onChange={event => setInviteModeratorCode(event.target.value)} /> : ''}
+                                <Button onClick={handleInviteToModeratorRoom} color="pattern">Convidar monitor</Button>
+                                <Button onClick={handleQuitRoom} color="pattern">Encerrar a sala </Button>
+                            </>
+                        }
                     </div>
                 </div>
             </header>
@@ -135,6 +176,7 @@ export function AdminRoom() {
                         return (
                             <>
                                 <Questions
+                                    moderator={question.moderator}
                                     key={question.id}
                                     content={question.content}
                                     author={question.author}

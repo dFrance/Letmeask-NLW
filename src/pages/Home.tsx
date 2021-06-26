@@ -15,6 +15,7 @@ export function Home() {
     const [value, setValue] = useState('');
     const history = useHistory();
     const [roomNotFound, setRoomNotFound] = useState(false);
+    const [roomStoped, setRoomStoped] = useState(false);
     const { signInWithGoogle, signInWithFacebook, logout, user, messageError } = useAuth()
     const roomCode = value
 
@@ -65,7 +66,6 @@ export function Home() {
 
     async function handleJoinRoom(event: FormEvent) {
         event.preventDefault();
-
         if (roomCode.trim() === '') {
             return;
         }
@@ -75,13 +75,17 @@ export function Home() {
         if (!roomRef.exists()) {
             setRoomNotFound(true)
             return
+        } 
+
+        if (roomRef.val().endedAt === true) {
+            setRoomStoped(true);
+            return
         }
 
         history.push(`/rooms/${roomCode}`)
     }
 
     //---------------------------//
-
     return (
         <div id="page-auth">
             <aside>
@@ -97,7 +101,7 @@ export function Home() {
                 <div className="main-content">
                     <img src={LogoLMA} alt="" />
                     {user?.name && user?.name !== 'UnLogged' ? <>
-                        <Link className="toProfile" to="/profile">
+                        <Link className="toProfile" to="/">
                             <h2>Olá {user?.name}
                                 <p>
                                     <button onClick={() => handleLogOut()}>Não é você?</button>
@@ -144,6 +148,7 @@ export function Home() {
                             placeholder="Digite o código da sala"
                         />
                         {roomNotFound === true ? <h5 className="error">Nenhuma sala foi encontrada com esse código.</h5> : ''}
+                        {roomStoped === true ? <h5 className="error">A sala que você deseja conectar foi pausada ou encerrada.</h5> : ''}
                         <Button
                             type="submit"
                             disabled={desativar}

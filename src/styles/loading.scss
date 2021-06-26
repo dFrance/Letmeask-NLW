@@ -2,13 +2,15 @@
     0%   {
         opacity: 0.5;
         font-size: 24px;}
-    100% {
+    50% {
         opacity: 1;
         font-size: 12px;}
-  }
+    100% {
+        font-size: 24px;}
+    }
 
 .loading{
-    animation: loading 2s;
+    animation: loading 4s;
     height: 100vh;
     align-items: center;
     display: flex;

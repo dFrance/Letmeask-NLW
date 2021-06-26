@@ -6,6 +6,7 @@ type User = {
     id: string,
     name: string,
     avatar: string,
+    moderatorId?: number,
 }
 
 type AuthContextType = {
@@ -25,7 +26,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
 
     const [user, setUser] = useState<User>();
     const [ messageError, setMessageError] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [idMod, setIdMod] = useState<number>();
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -41,31 +42,30 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
                     name: displayName,
                     avatar: photoURL,
                 })
-
-                setLoading(false)
             }
         })
 
         return () => {
             unsubscribe();
         }
-    }, [])
+    }, [idMod])
 
     async function signInWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
         const result = await auth.signInWithPopup(provider);
         if (result.user) {
-            const { displayName, photoURL, uid } = result.user
-
+            const { displayName, photoURL, uid, email } = result.user
+            console.log(email)
             if (!displayName || !photoURL) {
                 throw new Error('Sem informações da sua conta Google')
             }
-
             setUser({
                 id: uid,
                 name: displayName,
                 avatar: photoURL,
+                moderatorId: +new Date,
             })
+
         }
     };
 
@@ -79,7 +79,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         const result = await auth.signInWithPopup(provider);
 
             if (result.user) {
-                const { displayName, photoURL, uid } = result.user
+                const { displayName, photoURL, uid} = result.user
 
                 if (!displayName || !photoURL) {
                     throw new Error('Sem informações da sua conta Google')
@@ -90,6 +90,7 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
                     name: displayName,
                     avatar: photoURL,
                 })
+                setIdMod(user?.moderatorId)
 
             }
         
