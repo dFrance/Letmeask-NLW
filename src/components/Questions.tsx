@@ -8,7 +8,7 @@ import cx from 'classnames'
 
 type QuestionProps = {
     content: string;
-    moderator?: string;
+    moderatorId?: string;
     replyContent: string;
     author: {
         name: string;
@@ -29,7 +29,7 @@ type QuestionProps = {
 
 export function Questions({
     content,
-    moderator,
+    moderatorId,
     replyContent,
     author,
     isAnswered = false,

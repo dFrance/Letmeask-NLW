@@ -4,7 +4,7 @@ import { useAuth } from "./useAuth";
 
 type QuestionType = {
     id: string;
-    moderator?: string;
+    moderatorId?: string;
     replyContent: string;
     endedAt: boolean;
     openReply: boolean;
@@ -24,7 +24,7 @@ type FirebaseQuestions = Record<string, {
         name: string;
         avatar: string;
     }
-    moderator?: string;
+    moderatorId?: string;
     endedAt: boolean;
     openReply: boolean;
     replyContent: string;
@@ -56,7 +56,7 @@ export function useRoom(roomId: string) {
                 return {
                     id: key,
                     endedAt: value.endedAt,
-                    moderatorId: value.moderator,
+                    moderatorId: value.moderatorId,
                     content: value.content,
                     openReply: value.openReply,
                     replyContent: value.replyContent,
@@ -69,7 +69,7 @@ export function useRoom(roomId: string) {
             })
             setEndedAt(databaseRoom.endedAt)
             setTitle(databaseRoom.title)
-            setModerator(databaseRoom.moderator)
+            setModerator(databaseRoom.moderatorId)
             setAuthorId(databaseRoom.authorId)
             setQuestions(parsedQuestions)
         })

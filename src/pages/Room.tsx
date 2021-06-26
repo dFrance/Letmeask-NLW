@@ -8,6 +8,7 @@ import {Loading} from '../components/Loading'
 import { RoomCode } from '../components/RoomCode';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../Services/fisebase';
+import emptyQuestion from '../assets/images/empty-questions.svg'
 
 import { Questions } from '../components/Questions'
 
@@ -147,11 +148,13 @@ export function Room() {
                         </div>
 
                     </form>
+                    {questions.length == 0 && 
+                    <div className="empty"><img src={emptyQuestion} /><h2>Nenhuma pergunta por enquanto :/</h2><span>Que tal fazer a primeira pergunta? <br/> A sua dúvida pode ser a mesma de outras pessoas.</span></div> }
                     {questions.map(question => {
                         return (
                             <Questions
                                 key={question.id}
-                                moderator={question.moderator}
+                                moderatorId={question.moderatorId}
                                 content={question.content}
                                 author={question.author}
                                 replyContent={question.replyContent}

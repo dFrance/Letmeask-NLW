@@ -67,6 +67,24 @@ main {
         }
 
     }
+
+    .empty{
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h2 {
+            margin-top: 16px;
+        }
+        span {
+            margin-top: 8px;
+            text-align: center;
+        }
+        img {
+            max-width: 250px;
+        }
+    }
     
     form {
         .question {
