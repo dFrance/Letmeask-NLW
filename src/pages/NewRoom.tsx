@@ -8,6 +8,7 @@ import {database} from '../Services/fisebase'
 import { useAuth } from '../hooks/useAuth';
 
 export function NewRoom() {
+    
     const [disabled, setDisabled] = useState(true);
     const [value, setValue] = useState('');
     const {user} = useAuth();

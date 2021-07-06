@@ -94,7 +94,7 @@ export function Home() {
                     Todas as duvidas sobre sua aula!
                 </strong>
                 <p>
-                    Uma site para organizar as pergusta sobre sua aula em tempo real.
+                    Uma site para organizar as perguntas sobre sua aula em tempo real.
                 </p>
             </aside>
             <main>

@@ -36,6 +36,7 @@ export function Room() {
     
     
     //Verificação de sala online 
+    
     useEffect(() => {
         if (endedAt !== undefined) {
             if (endedAt === false) {
