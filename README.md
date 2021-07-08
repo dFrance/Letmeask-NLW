@@ -1,6 +1,7 @@
 # Bem vindo ao projeto umaduvida, por enquanto com o material gráfico do letmeask
 
 A ideia do projeto é criar uma plataforma para que um professor consiga visualizar melhor as perguntas dos seus alunos, responder elas e dar destaques a que ele achar importante.
+Link da aplicação rodando - https://letmeask-difrance.netlify.app
 
 ## O que a plataforma executa por enquanto?
 
