@@ -128,20 +128,23 @@ main {
             button{
                 border:0;
             }
+
             .like-button, .delete-question {
                 background: transparent;
                 cursor: pointer;
                 color: #ff9f43;
                 gap: 8px;
                 transition: 0.2s;
-        
+
                 &:hover {
                     filter: brightness(0.8);
                 }
         
                 &.liked {
-                    color: #ff9f43;
-        
+                    span {
+                        color: #ff9f43;
+                    }
+                    
                     svg path {
                         stroke: #ff9f43;
                     }

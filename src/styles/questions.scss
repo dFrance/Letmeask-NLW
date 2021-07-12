@@ -83,12 +83,11 @@
                 border:0;
                 background: transparent;
                 cursor: pointer;
-                color: #FFF;
+                color: #ff9f43;
                 transition: 0.5s;
                 
                 
                 &.liked, &:hover {
-                    color: #FFF;
                     
                     svg path {
                         stroke: #ff9f43;

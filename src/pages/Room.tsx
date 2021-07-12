@@ -91,6 +91,7 @@ export function Room() {
             },
             isHighlighted: false,
             isAnswered: false,
+            date: +new Date(),
         };
 
         await database.ref(`rooms/${roomId}/questions`).push(question);
@@ -151,7 +152,7 @@ export function Room() {
                     </form>
                     {questions.length == 0 && 
                     <div className="empty"><img src={emptyQuestion} /><h2>Nenhuma pergunta por enquanto :/</h2><span>Que tal fazer a primeira pergunta? <br/> A sua dúvida pode ser a mesma de outras pessoas.</span></div> }
-                    {questions.map(question => {
+                    {questions.sort((a,b) => b.likeCount - a.likeCount || b.date - a.date).map(question => {
                         return (
                             <Questions
                                 key={question.id}
@@ -162,6 +163,7 @@ export function Room() {
                                 openReply={question.openReply}
                                 isHighlighted={question.isHighlighted}
                                 isAnswered={question.isAnswered}
+                                date={question.date}
                             >
                                 <button
                                     className={`like-button ${question.likeId ? 'liked' : ''}`}

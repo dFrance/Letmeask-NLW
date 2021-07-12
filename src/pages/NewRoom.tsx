@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import { useState, useEffect } from 'react'
 import {Link, useHistory} from 'react-router-dom';
 import { FormEvent } from 'react';
-import {database} from '../Services/fisebase'
+import {database, firestore} from '../Services/fisebase'
 import { useAuth } from '../hooks/useAuth';
 
 export function NewRoom() {
@@ -13,6 +13,18 @@ export function NewRoom() {
     const [value, setValue] = useState('');
     const {user} = useAuth();
     const history = useHistory();
+    const date = +new Date();
+
+    function makeid(length: any) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * 
+     charactersLength));
+       }
+       return result;
+    }
 
     async function handleCreateRoom(event: FormEvent) {
         event.preventDefault();
@@ -21,7 +33,13 @@ export function NewRoom() {
             return
         }
 
-        const roomRef = database.ref('rooms');
+        const roomRef = database.ref(`rooms/`);
+        const roomRefFire = firestore.collection(`rooms`).doc(makeid(6)).set({
+            title: value,
+            authorId: user?.id,
+            moderatorId: '',
+            endedAt: false,
+        });
 
         const firebaseRoom = await roomRef.push({
             title: value,
@@ -30,7 +48,7 @@ export function NewRoom() {
             endedAt: false,
         })
 
-        history.push(`/rooms/${firebaseRoom.key}`)
+        history.push(`/admin/rooms/${firebaseRoom.key}`)
     }
 
     useEffect(() => {

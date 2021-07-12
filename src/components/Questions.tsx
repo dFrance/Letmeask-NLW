@@ -20,6 +20,7 @@ type QuestionProps = {
     isHighlighted?: boolean;
     openReply?: boolean;
     admin?: boolean;
+    date: number;
     
 }
 

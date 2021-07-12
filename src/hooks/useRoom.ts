@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { database } from "../Services/fisebase";
+import { database, firestore } from "../Services/fisebase";
 import { useAuth } from "./useAuth";
 
 type QuestionType = {
@@ -17,6 +17,7 @@ type QuestionType = {
     isHighlighted: boolean;
     likeCount: number;
     likeId: string | undefined;
+    date: number;
 }
 
 type FirebaseQuestions = Record<string, {
@@ -31,6 +32,7 @@ type FirebaseQuestions = Record<string, {
     content: string;
     isAnswered: boolean;
     isHighlighted: boolean;
+    date: number;
     likes: Record<string, {
         authorId: string;
     }>
@@ -47,6 +49,7 @@ export function useRoom(roomId: string) {
     
     useEffect(() => {
         const roomRef = database.ref(`rooms/${roomId}`);
+        const roomFire = firestore.collection('rooms').doc(`${roomId}`).get();
 
         roomRef.on('value', room => {
             const databaseRoom = room.val();
@@ -61,6 +64,7 @@ export function useRoom(roomId: string) {
                     openReply: value.openReply,
                     replyContent: value.replyContent,
                     author: value.author,
+                    date: value.date,
                     isAnswered: value.isAnswered,
                     isHighlighted: value.isHighlighted,
                     likeCount: Object.values(value.likes ?? {}).length,

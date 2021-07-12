@@ -205,6 +205,7 @@ export function AdminRoom() {
                                         isAnswered={question.isAnswered}
                                         replyContent={question.replyContent}
                                         openReply={question.openReply}
+                                        date={question.date}
                                         admin={true}
                                         reply={
                                             question.openReply &&
